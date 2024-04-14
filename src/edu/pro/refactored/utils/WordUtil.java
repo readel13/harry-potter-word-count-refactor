@@ -1,19 +1,26 @@
 package edu.pro.refactored.utils;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 public class WordUtil {
 
-    public static String[] getWords(String content) {
+    public static List<String> getWords(String content) {
         if (content == null || content.isEmpty()) {
-            return new String[0];
+            return Collections.emptyList();
         }
 
-        return Arrays.stream(cleanText(content).split(" +"))
-                .filter(s -> !s.isBlank())
-                .map(String::trim)
-                .toArray(String[]::new);
+        List<String> result = new ArrayList<>();
+
+        for (var word : cleanText(content).split(" ")) {
+            if (!word.isBlank()) {
+                result.add(word.trim());
+            }
+        }
+
+        return result;
     }
 
     private static String cleanText(String text) {
